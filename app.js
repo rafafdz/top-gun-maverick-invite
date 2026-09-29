@@ -298,30 +298,32 @@
       side = side === 3 ? 4 : 3;
     }
 
-    // Jet pass: out of the screen, over the listener and off to the right-rear
-    function flyby() {
+    // Jet pass: builds while the jet accelerates inside the screen, peaks as it
+    // crosses the glass (at dur * peak), then passes the listener to the right-rear.
+    function flyby(dur = 5.6, peak = .7) {
       if (!on || muted || !ac) return;
-      const t = ac.currentTime, dur = 5.6;
+      const t = ac.currentTime;
       const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
       const bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = 1.1;
-      bp.frequency.setValueAtTime(350, t); bp.frequency.exponentialRampToValueAtTime(2600, t + dur * .7); bp.frequency.exponentialRampToValueAtTime(500, t + dur);
+      bp.frequency.setValueAtTime(350, t); bp.frequency.exponentialRampToValueAtTime(2800, t + dur * peak); bp.frequency.exponentialRampToValueAtTime(450, t + dur * peak + 1.2);
       const g = ac.createGain();
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.9, t + dur * .7); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.02, t + dur * peak * .6); g.gain.exponentialRampToValueAtTime(1, t + dur * peak); g.gain.exponentialRampToValueAtTime(.0001, t + dur * peak + 1.3);
       const tone = ac.createOscillator(); tone.type = "sawtooth";
-      tone.frequency.setValueAtTime(160, t); tone.frequency.exponentialRampToValueAtTime(420, t + dur * .7); tone.frequency.exponentialRampToValueAtTime(140, t + dur);
+      tone.frequency.setValueAtTime(160, t); tone.frequency.exponentialRampToValueAtTime(460, t + dur * peak); tone.frequency.exponentialRampToValueAtTime(130, t + dur * peak + 1.2);
       const toneLP = ac.createBiquadFilter(); toneLP.type = "lowpass"; toneLP.frequency.value = 800;
       const toneG = ac.createGain(); toneG.gain.value = .07;
       const pan = ac.createPanner(); place(pan, [0, 0, -10]); pan.refDistance = .6;
       if (pan.positionX) {
         pan.positionX.setValueAtTime(0, t); pan.positionZ.setValueAtTime(-10, t);
-        pan.positionX.linearRampToValueAtTime(.6, t + dur * .7); pan.positionZ.linearRampToValueAtTime(-.5, t + dur * .7);
-        pan.positionX.linearRampToValueAtTime(3, t + dur); pan.positionZ.linearRampToValueAtTime(3, t + dur);
+        pan.positionX.linearRampToValueAtTime(.6, t + dur * peak); pan.positionZ.linearRampToValueAtTime(-.5, t + dur * peak);
+        pan.positionX.linearRampToValueAtTime(3, t + dur * peak + 1.2); pan.positionZ.linearRampToValueAtTime(3, t + dur * peak + 1.2);
       }
       src.connect(bp).connect(g);
       tone.connect(toneLP).connect(toneG).connect(g);
       g.connect(pan).connect(master);
       const sub = ac.createGain(); sub.gain.value = .5; g.connect(sub).connect(chans[5].g);
-      src.start(t); src.stop(t + dur + .1); tone.start(t); tone.stop(t + dur + .1);
+      const end = t + dur * peak + 1.4;
+      src.start(t); src.stop(end); tone.start(t); tone.stop(end);
     }
 
     function meter() {

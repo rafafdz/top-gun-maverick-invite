@@ -133,12 +133,24 @@ em { font-style: italic; }
 
 /* ---------- Screen ---------- */
 .stage { position: relative; }
-.tv-wrap { position: relative; }
+/* Reactive light: scene.js writes one colour (--spill-rgb), its strength (--spill-a)
+   and the jet's position relative to the TV centre (--spill-x/y) every frame. */
+.stage { --spill-rgb: 61 123 255; --spill-a: 0; --spill-x: 0px; --spill-y: 0px; }
+.tv-wrap { position: relative; isolation: isolate; }
+.tv-wrap::before { /* halo behind the TV, follows the jet */
+  content: ""; position: absolute; inset: -16% -12%; z-index: -1; pointer-events: none;
+  background: radial-gradient(42% 58% at calc(50% + var(--spill-x) * .8) calc(50% + var(--spill-y) * .8),
+    rgb(var(--spill-rgb) / calc(var(--spill-a) * .42)), transparent 72%);
+}
 .tv {
   margin: 0; padding: 10px; border-radius: 14px;
   background: var(--panel);
   border: 1px solid var(--line);
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .8);
+  box-shadow:
+    0 40px 80px -40px rgba(0, 0, 0, .8),
+    calc(var(--spill-x) * .06) calc(var(--spill-y) * .06) 70px -12px rgb(var(--spill-rgb) / calc(var(--spill-a) * .55)),
+    inset calc(var(--spill-x) * -.035) calc(var(--spill-y) * -.035) 26px -10px rgb(var(--spill-rgb) / calc(var(--spill-a) * .9)),
+    inset 0 0 0 1px rgb(var(--spill-rgb) / calc(var(--spill-a) * .35));
 }
 .tv__screen {
   position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px;
