@@ -298,23 +298,24 @@
       side = side === 3 ? 4 : 3;
     }
 
-    // Jet pass: from behind the listener toward the screen, matching the visual
+    // Jet pass: out of the screen, over the listener and off to the right-rear
     function flyby() {
       if (!on || muted || !ac) return;
-      const t = ac.currentTime, dur = 4.2;
+      const t = ac.currentTime, dur = 5.6;
       const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
       const bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = 1.1;
-      bp.frequency.setValueAtTime(2400, t); bp.frequency.exponentialRampToValueAtTime(350, t + dur);
+      bp.frequency.setValueAtTime(350, t); bp.frequency.exponentialRampToValueAtTime(2600, t + dur * .7); bp.frequency.exponentialRampToValueAtTime(500, t + dur);
       const g = ac.createGain();
-      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.9, t + .5); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.9, t + dur * .7); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
       const tone = ac.createOscillator(); tone.type = "sawtooth";
-      tone.frequency.setValueAtTime(380, t); tone.frequency.exponentialRampToValueAtTime(120, t + dur);
+      tone.frequency.setValueAtTime(160, t); tone.frequency.exponentialRampToValueAtTime(420, t + dur * .7); tone.frequency.exponentialRampToValueAtTime(140, t + dur);
       const toneLP = ac.createBiquadFilter(); toneLP.type = "lowpass"; toneLP.frequency.value = 800;
       const toneG = ac.createGain(); toneG.gain.value = .07;
-      const pan = ac.createPanner(); place(pan, [1.5, 0, 2]); pan.refDistance = .6;
+      const pan = ac.createPanner(); place(pan, [0, 0, -10]); pan.refDistance = .6;
       if (pan.positionX) {
-        pan.positionX.setValueAtTime(1.5, t); pan.positionZ.setValueAtTime(2, t);
-        pan.positionX.linearRampToValueAtTime(0, t + dur); pan.positionZ.linearRampToValueAtTime(-10, t + dur);
+        pan.positionX.setValueAtTime(0, t); pan.positionZ.setValueAtTime(-10, t);
+        pan.positionX.linearRampToValueAtTime(.6, t + dur * .7); pan.positionZ.linearRampToValueAtTime(-.5, t + dur * .7);
+        pan.positionX.linearRampToValueAtTime(3, t + dur); pan.positionZ.linearRampToValueAtTime(3, t + dur);
       }
       src.connect(bp).connect(g);
       tone.connect(toneLP).connect(toneG).connect(g);
@@ -398,8 +399,8 @@
     return { flyby };
   })();
 
-  // Sync the jet sound with each visual pass
-  document.querySelector(".jet")?.addEventListener("animationiteration", () => sound.flyby());
+  // scene.js (Three.js) calls this at the start of each jet pass.
+  window.TGM = { flyby: sound.flyby };
 
   // ---------------------------------------------------------------------------
   // RSVP + calendar — nothing is collected or sent by this site.

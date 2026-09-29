@@ -157,22 +157,16 @@ em { font-style: italic; }
   font-size: 10px; letter-spacing: .12em; color: var(--faint);
 }
 
-/* The jet lives outside the screen's clip so it can enter from the viewer's space. */
-.jet {
-  position: absolute; left: 50%; top: 56%; width: 26%; aspect-ratio: 200 / 240;
-  pointer-events: none; z-index: 2; opacity: 0;
-  transform-origin: 50% 50%;
-  animation: jet 9s cubic-bezier(.2, .6, .35, 1) infinite;
-  will-change: transform, opacity;
+/* WebGL layer: larger than the TV so the aircraft can leave the frame.
+   scene.js clips the part behind the glass to the screen rectangle. */
+.gl {
+  position: absolute; left: -18%; top: -30%; width: 136%; height: 175%;
+  pointer-events: none; z-index: 2;
 }
-.jet svg { width: 100%; height: 100%; overflow: visible; }
-.jet__glow { fill: var(--accent); filter: blur(3px); }
-@keyframes jet {
-  0%   { opacity: 0; transform: translate(-50%, -50%) perspective(900px) translate(55%, 95%) rotateX(52deg) rotateZ(-10deg) scale(1.9); }
-  5%   { opacity: 1; }
-  52%  { opacity: 1; transform: translate(-50%, -50%) perspective(900px) translate(0, 0) rotateX(62deg) rotateZ(0deg) scale(.1); }
-  58%  { opacity: 0; transform: translate(-50%, -50%) perspective(900px) translate(0, -4%) rotateX(62deg) rotateZ(0deg) scale(.04); }
-  100% { opacity: 0; transform: translate(-50%, -50%) perspective(900px) translate(0, -4%) rotateX(62deg) rotateZ(0deg) scale(.04); }
+.tv__fallback {
+  position: absolute; left: 50%; top: 56%; translate: -50% -50%; margin: 0;
+  padding: 8px 12px; border: 1px solid var(--line-2); border-radius: 6px;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: var(--screen); white-space: nowrap;
 }
 
 .immersive {
@@ -188,6 +182,8 @@ em { font-style: italic; }
 /* ---------- Footer ---------- */
 .foot { padding: 24px var(--gutter) 32px; font-size: 12px; color: var(--faint); }
 .foot p { margin: 0; max-width: 1600px; }
+.foot a { color: var(--muted); text-underline-offset: 3px; }
+.foot a:hover { color: var(--text); }
 
 /* ---------- Sound dialog ---------- */
 .sheet {
@@ -249,7 +245,6 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
 @media (max-width: 900px) {
   .hero { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 40px; padding-top: 8px; }
   .stage { order: -1; }
-  .jet { width: 30%; }
 }
 @media (max-width: 520px) {
   .bar { padding-top: 14px; padding-bottom: 14px; }
@@ -266,6 +261,5 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .jet { opacity: 1; transform: translate(-50%, -50%) perspective(900px) rotateX(58deg) scale(.32); }
   .tv__scan { display: none; }
 }

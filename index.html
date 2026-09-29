@@ -14,6 +14,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }
+  </script>
+  <link rel="modulepreload" href="vendor/three/three.module.min.js">
 </head>
 <body>
   <a class="skip" href="#main">Saltar al contenido</a>
@@ -72,26 +76,12 @@
           <div class="tv__meta mono" aria-hidden="true">
             <span>RDR · SCL</span><span>30.09.2026</span>
           </div>
+          <p class="tv__fallback mono" id="gl-fallback" hidden>Modelo 3D no disponible</p>
         </div>
-        <figcaption class="sr-only">Escena abstracta: un barrido de radar y un caza estilizado que entra a la pantalla.</figcaption>
+        <figcaption class="sr-only">Escena 3D: sobre un radar, un caza sale de la pantalla hacia el espectador.</figcaption>
       </figure>
 
-      <div class="jet" aria-hidden="true">
-        <svg viewBox="0 0 200 240">
-          <ellipse class="jet__glow" cx="91" cy="214" rx="5" ry="12"/>
-          <ellipse class="jet__glow" cx="109" cy="214" rx="5" ry="12"/>
-          <path d="M100 72 12 150l2 11 72-14h28l72 14 2-11Z" fill="#c9c6bf"/>
-          <path d="M100 40 78 110h44Z" fill="#a9a69f"/>
-          <path d="M87 176 46 210l2 8 43-13Zm26 0 41 34-2 8-43-13Z" fill="#b8b5ae"/>
-          <path d="M85 150 72 194l5 2 13-34Zm30 0 13 44-5 2-13-34Z" fill="#6f6d69"/>
-          <path d="M100 6c7 26 11 56 13 94l4 106H83l4-106c2-38 6-68 13-94Z" fill="#eeebe4"/>
-          <path d="M100 6c7 26 11 56 13 94l4 106h-17Z" fill="#d6d3cc"/>
-          <path d="M100 30c6 12 7 28 5 44h-10c-2-16-1-32 5-44Z" fill="#141518"/>
-          <path d="M100 34c3 8 4 20 3 34" stroke="#3d7bff" stroke-width="1.2" fill="none" opacity=".9"/>
-          <rect x="84" y="200" width="14" height="8" rx="2" fill="#2a2b2e"/>
-          <rect x="102" y="200" width="14" height="8" rx="2" fill="#2a2b2e"/>
-        </svg>
-      </div>
+      <canvas class="gl" id="gl" aria-hidden="true"></canvas>
      </div>
 
       <button type="button" class="immersive" id="immersive-open" aria-haspopup="dialog" aria-controls="sound">
@@ -102,7 +92,7 @@
   </main>
 
   <footer class="foot">
-    <p>Animación y sonido originales · sin material de la película. <em>Top Gun: Maverick</em> es marca de sus respectivos dueños.</p>
+    <p>Sonido original · sin material de la película. Modelo 3D “Jet” de <a href="https://poly.pizza/m/6fyLMORhgGK" rel="noopener noreferrer" target="_blank">jeremy</a>, <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer license" target="_blank">CC BY 3.0</a> (colores modificados). <em>Top Gun: Maverick</em> es marca de sus respectivos dueños.</p>
   </footer>
 
   <dialog class="sheet" id="sound" aria-labelledby="sound-title" aria-describedby="sound-desc">
@@ -141,5 +131,6 @@
   </dialog>
 
   <script src="app.js" defer></script>
+  <script type="module" src="scene.js"></script>
 </body>
 </html>
