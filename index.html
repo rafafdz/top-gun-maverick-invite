@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Noche de Cine · Top Gun: Maverick · 30 SEP 2026</title>
+  <meta name="description" content="Invitación a una noche de cine para ver Top Gun: Maverick. Miércoles 30 de septiembre de 2026, de 07:30 a 22:00 (hora de Chile).">
+  <meta name="theme-color" content="#05070d">
+  <meta property="og:title" content="Noche de Cine · Top Gun: Maverick">
+  <meta property="og:description" content="Miércoles 30 SEP 2026 · 07:30 – 22:00 (hora de Chile). ¿Te subes a la cabina?">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#invitacion">Saltar a la invitación</a>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg__radar"></div>
+    <div class="bg__grid"></div>
+    <div class="bg__glow"></div>
+    <div class="bg__scan"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar__brand">
+      <svg class="topbar__logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#jet-mark"/></svg>
+      <span>CALLSIGN <strong>MOVIE&nbsp;NIGHT</strong></span>
+    </div>
+    <div class="topbar__clock" role="group" aria-label="Hora actual en Chile">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="topbar__label">SCL</span>
+      <time id="clock" class="mono" aria-live="off">--:--:--</time>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="eyebrow__bar"></span>Invitación · Operación Cine en Casa</p>
+        <h1 id="hero-title" class="hero__title">
+          <span class="hero__kicker">Noche de cine</span>
+          <span class="hero__main">TOP GUN</span>
+          <span class="hero__sub">MAVERICK</span>
+        </h1>
+        <p class="hero__lede">Prepárate para despegar. Te invito a ver <em>Top Gun: Maverick</em> en modo pantalla gigante, sonido envolvente y cero excusas. Trae tu actitud de piloto — de lo demás me encargo yo.</p>
+
+        <dl class="facts">
+          <div class="fact">
+            <dt>Fecha</dt>
+            <dd><time datetime="2026-09-30">Miércoles 30 SEP 2026</time></dd>
+          </div>
+          <div class="fact fact--hours">
+            <dt>Horario</dt>
+            <dd><time datetime="2026-09-30T07:30-03:00">07:30</time> <span aria-hidden="true">→</span><span class="sr-only">a</span> <time datetime="2026-09-30T22:00-03:00">22:00</time></dd>
+          </div>
+          <div class="fact">
+            <dt>Zona</dt>
+            <dd>Hora de Chile</dd>
+          </div>
+        </dl>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#rsvp">
+            <span class="btn__icon" aria-hidden="true">▲</span> Confirmar misil · Voy
+          </a>
+          <a class="btn btn--ghost" href="#inmersiva">Experiencia inmersiva</a>
+        </div>
+      </div>
+
+      <!-- TV / CINEMA SCREEN -->
+      <div class="theater" id="theater">
+        <div class="theater__bloom" aria-hidden="true"></div>
+        <figure class="tv" aria-label="Pantalla de cine: un caza estilizado vuela a través de la pantalla sobre una grilla de radar">
+          <div class="tv__frame">
+            <div class="tv__screen">
+              <canvas id="screen-canvas" class="tv__canvas" aria-hidden="true"></canvas>
+              <div class="tv__hud" aria-hidden="true">
+                <div class="hud__reticle"></div>
+                <div class="hud__ladder"><span>+10</span><span>+05</span><span>00</span><span>-05</span><span>-10</span></div>
+                <div class="hud__tl mono">ALT <b id="hud-alt">12 500</b> FT</div>
+                <div class="hud__tr mono">SPD <b id="hud-spd">M 1.2</b></div>
+                <div class="hud__bl mono">HDG <b id="hud-hdg">270</b>°</div>
+                <div class="hud__br mono"><span class="rec"></span>LIVE · SCL</div>
+                <div class="hud__title">
+                  <span class="mono">30 · 09 · 2026</span>
+                  <strong>DAREDEVIL NIGHT</strong>
+                </div>
+              </div>
+              <div class="tv__scanlines" aria-hidden="true"></div>
+              <div class="tv__glare" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="tv__stand" aria-hidden="true"></div>
+          <figcaption class="sr-only">Animación ilustrativa original, sin imágenes de la película.</figcaption>
+        </figure>
+
+        <!-- Jets live outside the screen clip so they can burst out of it -->
+        <div class="flyby" aria-hidden="true">
+          <div class="jet jet--hero"><div class="jet__trail"></div><svg viewBox="0 0 200 240"><use href="#jet"/></svg></div>
+          <div class="jet jet--wing"><div class="jet__trail"></div><svg viewBox="0 0 200 240"><use href="#jet"/></svg></div>
+          <div class="jet jet--cross"><div class="jet__trail"></div><svg viewBox="0 0 200 240"><use href="#jet"/></svg></div>
+        </div>
+        <div class="speedlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <!-- STATUS -->
+    <section class="status" id="invitacion" aria-labelledby="status-title">
+      <div class="panel status__panel">
+        <div class="status__head">
+          <h2 id="status-title" class="h2"><span class="h2__idx mono">01</span> Estado de la misión</h2>
+          <span class="badge" id="status-badge">SINCRONIZANDO</span>
+        </div>
+        <p class="status__line" id="status-line" aria-live="polite">Calculando hora de Chile…</p>
+
+        <div class="countdown" id="countdown" role="timer" aria-label="Cuenta regresiva">
+          <div class="cd"><span class="cd__n mono" id="cd-d">--</span><span class="cd__l">días</span></div>
+          <div class="cd"><span class="cd__n mono" id="cd-h">--</span><span class="cd__l">horas</span></div>
+          <div class="cd"><span class="cd__n mono" id="cd-m">--</span><span class="cd__l">min</span></div>
+          <div class="cd"><span class="cd__n mono" id="cd-s">--</span><span class="cd__l">seg</span></div>
+        </div>
+
+        <div class="timeline" aria-label="Ventana del evento de 07:30 a 22:00">
+          <div class="timeline__track">
+            <div class="timeline__window"></div>
+            <div class="timeline__now" id="timeline-now"><span class="mono" id="timeline-now-label">--:--</span></div>
+          </div>
+          <div class="timeline__ticks mono" aria-hidden="true">
+            <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
+          </div>
+          <div class="timeline__legend">
+            <span><i class="sw sw--win"></i> Ventana 07:30 – 22:00</span>
+            <span><i class="sw sw--now"></i> Ahora (Chile)</span>
+          </div>
+        </div>
+        <p class="status__hour mono" id="status-hour">Próximo pulso horario: --:--</p>
+      </div>
+
+      <div class="panel plan">
+        <h2 class="h2"><span class="h2__idx mono">02</span> Plan de vuelo</h2>
+        <ol class="plan__list" id="plan">
+          <li data-start="07:30" data-end="12:00"><span class="mono">07:30</span><div><strong>Despegue</strong><p>Se abre la base. Café de piloto y briefing.</p></div></li>
+          <li data-start="12:00" data-end="18:00"><span class="mono">12:00</span><div><strong>Entrenamiento</strong><p>Llega cuando puedas: previa, snacks y ajuste de sonido.</p></div></li>
+          <li data-start="18:00" data-end="19:30"><span class="mono">18:00</span><div><strong>Hangar abierto</strong><p>Pizzas, cabritas y reparto de callsigns.</p></div></li>
+          <li data-start="19:30" data-end="21:45"><span class="mono">19:30</span><div><strong>Misión principal</strong><p>Top Gun: Maverick en pantalla completa. Celulares en modo avión.</p></div></li>
+          <li data-start="21:45" data-end="22:00"><span class="mono">21:45</span><div><strong>Debrief</strong><p>Mejor escena, mejor maniobra, mejor frase.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- IMMERSIVE -->
+    <section class="immersive" id="inmersiva" aria-labelledby="imm-title">
+      <div class="immersive__label" aria-hidden="true"><span>EXPERIENCIA INMERSIVA</span><span>EXPERIENCIA INMERSIVA</span></div>
+      <div class="panel immersive__panel">
+        <div class="immersive__intro">
+          <p class="eyebrow"><span class="eyebrow__bar"></span>Cabina de sonido</p>
+          <h2 id="imm-title" class="h2 h2--xl">Experiencia inmersiva</h2>
+          <p>Activa una ambientación sonora original generada en tiempo real con la Web Audio API: turbinas lejanas, viento de altura y pasadas de avión que recorren la sala. Es una <strong>mezcla 5.1 simulada</strong> con paneo binaural para audífonos o parlantes estéreo — no es audio de la película ni un 5.1 real.</p>
+          <p class="note">El sonido nunca se reproduce solo: se activa únicamente cuando presionas el botón.</p>
+        </div>
+
+        <div class="surround">
+          <div class="surround__room" aria-hidden="true">
+            <div class="spk spk--fl" data-ch="0"><i></i><span>L</span></div>
+            <div class="spk spk--c" data-ch="1"><i></i><span>C</span></div>
+            <div class="spk spk--fr" data-ch="2"><i></i><span>R</span></div>
+            <div class="spk spk--sl" data-ch="3"><i></i><span>SL</span></div>
+            <div class="spk spk--sr" data-ch="4"><i></i><span>SR</span></div>
+            <div class="spk spk--lfe" data-ch="5"><i></i><span>LFE</span></div>
+            <div class="surround__you"><span>TÚ</span></div>
+            <div class="surround__sweep"></div>
+          </div>
+
+          <div class="surround__controls">
+            <button type="button" class="btn btn--amber btn--block" id="audio-toggle" aria-pressed="false">
+              <span class="btn__icon" aria-hidden="true">◉</span>
+              <span id="audio-toggle-label">Activar sonido envolvente 5.1 (simulado)</span>
+            </button>
+            <div class="ctrl-row">
+              <button type="button" class="btn btn--ghost btn--sm" id="audio-mute" aria-pressed="false" disabled>Silenciar</button>
+              <label class="vol" for="audio-volume">
+                <span>Volumen</span>
+                <input type="range" id="audio-volume" min="0" max="100" value="55" aria-valuetext="55 por ciento">
+                <output id="audio-volume-out" class="mono" for="audio-volume">55%</output>
+              </label>
+            </div>
+            <p class="surround__state mono" id="audio-state" aria-live="polite">Sonido: apagado</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title">
+      <div class="panel rsvp__panel">
+        <div class="rsvp__copy">
+          <h2 id="rsvp-title" class="h2 h2--xl"><span class="h2__idx mono">03</span> ¿Te subes a la cabina?</h2>
+          <p>Confírmame por WhatsApp — el botón abre tu WhatsApp con un mensaje listo para que elijas a quién enviarlo. Este sitio no guarda ni envía ningún dato.</p>
+        </div>
+        <div class="rsvp__actions">
+          <a class="btn btn--primary btn--xl" id="rsvp-whatsapp" rel="noopener noreferrer" target="_blank"
+             href="https://wa.me/?text=%C2%A1Confirmo%20misil!%20Voy%20a%20la%20noche%20de%20cine%20de%20Top%20Gun%3A%20Maverick%20el%20mi%C3%A9rcoles%2030%20de%20septiembre%20%F0%9F%9B%A9%EF%B8%8F">
+            <span class="btn__icon" aria-hidden="true">▲</span> Confirmar misil · Voy
+          </a>
+          <div class="ctrl-row">
+            <button type="button" class="btn btn--ghost" id="rsvp-copy">Copiar mensaje</button>
+            <button type="button" class="btn btn--ghost" id="rsvp-ics">Agregar al calendario (.ics)</button>
+          </div>
+          <p class="rsvp__feedback mono" id="rsvp-feedback" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Hecho a mano para una noche entre amigos. Animaciones y sonido originales; sin imágenes ni audio de la película. <em>Top Gun: Maverick</em> es propiedad de sus respectivos dueños.</p>
+    <p class="mono">TALK TO ME, GOOSE · 30.09.2026 · 07:30–22:00 CLT</p>
+  </footer>
+
+  <!-- SVG symbols: original stylized twin-tail fighter -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="g-body" x1="0" x2="1">
+        <stop offset="0" stop-color="#3d4a5e"/><stop offset=".45" stop-color="#c9d4e2"/><stop offset=".55" stop-color="#aab6c6"/><stop offset="1" stop-color="#2b3444"/>
+      </linearGradient>
+      <linearGradient id="g-wing" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8795aa"/><stop offset="1" stop-color="#394559"/>
+      </linearGradient>
+      <radialGradient id="g-canopy" cx=".5" cy=".35" r=".6">
+        <stop offset="0" stop-color="#ffe2a8"/><stop offset=".4" stop-color="#f0a53a"/><stop offset="1" stop-color="#5a3510"/>
+      </radialGradient>
+      <radialGradient id="g-burner" cx=".5" cy=".2" r=".8">
+        <stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#ffd27a"/><stop offset=".7" stop-color="#ff7a1a" stop-opacity=".7"/><stop offset="1" stop-color="#ff4d00" stop-opacity="0"/>
+      </radialGradient>
+      <symbol id="jet" viewBox="0 0 200 240">
+        <!-- afterburners -->
+        <ellipse class="burner" cx="90" cy="222" rx="7" ry="18" fill="url(#g-burner)"/>
+        <ellipse class="burner" cx="110" cy="222" rx="7" ry="18" fill="url(#g-burner)"/>
+        <!-- main wings -->
+        <path d="M100 70 L10 150 L12 162 L84 148 L116 148 L188 162 L190 150 Z" fill="url(#g-wing)"/>
+        <!-- LEX -->
+        <path d="M100 38 L76 110 L124 110 Z" fill="#5d6a80"/>
+        <!-- tailplanes -->
+        <path d="M86 176 L44 212 L46 220 L90 206 Z M114 176 L156 212 L154 220 L110 206 Z" fill="url(#g-wing)"/>
+        <!-- twin vertical tails (seen from above, canted) -->
+        <path d="M84 150 L70 196 L76 198 L90 162 Z M116 150 L130 196 L124 198 L110 162 Z" fill="#2a3342"/>
+        <!-- fuselage -->
+        <path d="M100 4 C108 30 112 60 114 100 L118 206 L82 206 L86 100 C88 60 92 30 100 4 Z" fill="url(#g-body)"/>
+        <!-- nozzles -->
+        <rect x="83" y="200" width="14" height="10" rx="3" fill="#1a1f29"/>
+        <rect x="103" y="200" width="14" height="10" rx="3" fill="#1a1f29"/>
+        <!-- canopy -->
+        <path d="M100 30 C106 42 107 58 105 74 L95 74 C93 58 94 42 100 30 Z" fill="url(#g-canopy)"/>
+        <!-- panel lines + nav lights -->
+        <path d="M100 80 L100 196" stroke="#1d2430" stroke-width="1" opacity=".6"/>
+        <circle cx="12" cy="156" r="2.4" fill="#ff3b3b"/><circle cx="188" cy="156" r="2.4" fill="#3bff8a"/>
+      </symbol>
+      <symbol id="jet-mark" viewBox="0 0 64 64">
+        <path d="M32 4 L36 26 L60 40 L60 44 L36 38 L35 52 L44 58 L44 60 L32 57 L20 60 L20 58 L29 52 L28 38 L4 44 L4 40 L28 26 Z" fill="currentColor"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
